@@ -1,0 +1,17 @@
+{
+    "name": "PlayerCore",
+    "references": [
+        "GUID:b4b315441a78ac144ba81ca13cf6c48f",
+        "GUID:21461a372206b064fb9f21d800420fcf",
+        "GUID:36a48c813399503419def37499b6f540"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

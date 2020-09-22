@@ -1,0 +1,16 @@
+{
+    "name": "Pickupable",
+    "references": [
+        "GUID:7da7e643670dfd4449a7918ac7aa1d4b",
+        "GUID:6db673cf7fa06ea4fb5a7ab365006698"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
