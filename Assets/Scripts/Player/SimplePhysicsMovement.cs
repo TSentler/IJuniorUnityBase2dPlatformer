@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Player
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class SimplePhysicsMovement : SerializedMonoBehaviour, IGroundable, IMovement
+    public class SimplePhysicsMovement : SerializedMonoBehaviour, IMovement
     {
         private const float _minMoveDistance = 0.001f;
 
@@ -23,7 +23,8 @@ namespace Player
         private Rigidbody2D _rigidbody;
 
         [ShowInInspector] public bool IsGrounded { get; private set; }
-        
+
+        public bool IsMove => Mathf.Abs(_velocityBuffer.x) > _minMoveDistance;
         public Vector3 Position => transform.position;
         public Vector2 Velocity => _velocityBuffer;
 
@@ -65,9 +66,8 @@ namespace Player
             int count = _rigidbody.Cast(-transform.up, _contactFilter, _hitBuffer, _minGroundNormalY);
             IsGrounded = count > 0 && Mathf.Abs(_rigidbody.velocity.y) <= _minMoveDistance;
 
-            if (Mathf.Abs(_velocityBuffer.x) > _minMoveDistance)
+            if (IsMove)
                 transform.Translate(_velocityBuffer * Vector2.right * Time.deltaTime);
-
         }
 
         private void Update()

@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Player
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class PhysicsMovement : MonoBehaviour, IGroundable, IMovement
+    public class PhysicsMovement : MonoBehaviour, IMovement
     {
         private const float _minMoveDistance = 0.001f;
         private const float _shellRadius = 0.01f;
@@ -26,8 +26,10 @@ namespace Player
 
         [ShowInInspector] public bool IsGrounded { get; private set; }
 
+        public bool IsMove => Mathf.Abs(_velocity.x) > _minMoveDistance;
         public Vector3 Position => transform.position;
         public Vector2 Velocity => _velocity;
+
 
         private void Awake()
         {
@@ -116,8 +118,7 @@ namespace Player
                 }
             }
 
-            _rigidbody.position = _rigidbody.position + move.normalized * distance;
+            _rigidbody.position += move.normalized * distance;
         }
-
     }
 }
