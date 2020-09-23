@@ -16,21 +16,18 @@ MonoBehaviour:
   deleteDllAfterBuilds: 1
   AutomateForAllAOTPlatforms: 1
   automateForPlatforms: 0900000014000000
-  lastScan: 637363938150259989
+  lastScan: 637364730053545358
   supportSerializedTypes:
+  - TypeName: IAlarmZone, HouseAlarm
+    IsCustom: 0
+    Emit: 1
+  - TypeName: IAlarmZone[], HouseAlarm
+    IsCustom: 0
+    Emit: 1
   - TypeName: Switchers.IActivatable, Switchers
     IsCustom: 0
     Emit: 1
   - TypeName: Switchers.IActivatable[], Switchers
-    IsCustom: 0
-    Emit: 1
-  - TypeName: Player.IGroundable, PlayerCore
-    IsCustom: 0
-    Emit: 1
-  - TypeName: Control.IInputHandler, ControlInterface
-    IsCustom: 0
-    Emit: 1
-  - TypeName: Player.Ability.IPhysicsMovement, PlayerCore
     IsCustom: 0
     Emit: 1
   - TypeName: Audio.IVolumable, AudioAssembly

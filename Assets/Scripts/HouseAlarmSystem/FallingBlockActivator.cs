@@ -19,7 +19,7 @@ public class FallingBlockActivator : MonoBehaviour, IActivatable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out IPlayerCore playerCore))
+        if (collision.TryGetComponent(out IMovement player))
         {
             Activate();
         }
@@ -27,7 +27,7 @@ public class FallingBlockActivator : MonoBehaviour, IActivatable
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out IPlayerCore playerCore))
+        if (collision.TryGetComponent(out IMovement player))
         {
             Deactivate();
         }

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Pool 
 {
-    public class PoolStack : IPool
+    public class PoolStack
     {
         private Stack<IPoolable> _pool = new Stack<IPoolable>();
 

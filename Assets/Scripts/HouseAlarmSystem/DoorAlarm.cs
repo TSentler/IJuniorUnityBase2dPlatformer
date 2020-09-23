@@ -13,7 +13,8 @@ public class DoorAlarm : SerializedMonoBehaviour, IAlarmZone
     [SerializeField] private Vector2 _minMaxVolume = new Vector2(0, 0.5f);
     [SerializeField] private bool _isLeftExit;
 
-    public event UnityAction<bool> Alarmed;
+    public event UnityAction Alarmed;
+    public event UnityAction Calmed;
 
     private float MinVolume => _minMaxVolume.x;
     private float MaxVolume => _minMaxVolume.y;
@@ -21,7 +22,7 @@ public class DoorAlarm : SerializedMonoBehaviour, IAlarmZone
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out IPlayerCore playerCore))
+        if (collision.TryGetComponent(out IMovement player))
         {
             AlarmOn();
         }
@@ -29,8 +30,8 @@ public class DoorAlarm : SerializedMonoBehaviour, IAlarmZone
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out IPlayerCore playerCore) 
-            && ExitDirection * (transform.position.x - playerCore.Transform.position.x) < 0f )
+        if (collision.TryGetComponent(out IMovement player) 
+            && ExitDirection * (transform.position.x - player.Position.x) < 0f )
         {
             AlarmOff();
         }
@@ -39,12 +40,12 @@ public class DoorAlarm : SerializedMonoBehaviour, IAlarmZone
     private void AlarmOn()
     {
         _volumeSmooth.SetVolume(MaxVolume);
-        Alarmed?.Invoke(true);
+        Alarmed?.Invoke();
     }
 
     private void AlarmOff()
     {
         _volumeSmooth.SetVolume(MinVolume);
-        Alarmed?.Invoke(false);
+        Calmed?.Invoke();
     }
 }

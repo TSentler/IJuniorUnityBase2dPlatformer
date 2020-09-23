@@ -4,9 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Player.Ability
+namespace Player
 {
-    public class PhysicsMovement : Ability, IGroundable, IPhysicsMovement
+    [RequireComponent(typeof(Rigidbody2D))]
+    public class PhysicsMovement : MonoBehaviour, IGroundable, IMovement
     {
         private const float _minMoveDistance = 0.001f;
         private const float _shellRadius = 0.01f;
@@ -21,10 +22,17 @@ namespace Player.Ability
         private Vector2 _groundNormal;
         private ContactFilter2D _contactFilter;
         private List<RaycastHit2D> _hitBufferList = new List<RaycastHit2D>(16);
+        private Rigidbody2D _rigidbody;
 
         [ShowInInspector] public bool IsGrounded { get; private set; }
 
+        public Vector3 Position => transform.position;
         public Vector2 Velocity => _velocity;
+
+        private void Awake()
+        {
+            _rigidbody = GetComponent<Rigidbody2D>();
+        }
 
         private void Start()
         {
@@ -75,7 +83,7 @@ namespace Player.Ability
 
             if (distance > _minMoveDistance)
             {
-                int count = Core.Rigidbody.Cast(move, _contactFilter, _hitBuffer, distance + _shellRadius);
+                int count = _rigidbody.Cast(move, _contactFilter, _hitBuffer, distance + _shellRadius);
 
                 _hitBufferList.Clear();
 
@@ -108,7 +116,7 @@ namespace Player.Ability
                 }
             }
 
-            Core.Rigidbody.position = Core.Rigidbody.position + move.normalized * distance;
+            _rigidbody.position = _rigidbody.position + move.normalized * distance;
         }
 
     }

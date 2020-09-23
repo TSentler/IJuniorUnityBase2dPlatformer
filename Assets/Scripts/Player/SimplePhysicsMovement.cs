@@ -1,12 +1,14 @@
-﻿using Sirenix.OdinInspector;
+﻿using Control;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Player.Ability
+namespace Player
 {
-    public class SimplePhysicsMovement : Ability, IGroundable, IPhysicsMovement
+    [RequireComponent(typeof(Rigidbody2D))]
+    public class SimplePhysicsMovement : SerializedMonoBehaviour, IGroundable, IMovement
     {
         private const float _minMoveDistance = 0.001f;
 
@@ -18,10 +20,17 @@ namespace Player.Ability
         [SerializeField] private LayerMask _layerMask;
 
         private ContactFilter2D _contactFilter;
+        private Rigidbody2D _rigidbody;
 
         [ShowInInspector] public bool IsGrounded { get; private set; }
+        
+        public Vector3 Position => transform.position;
+        public Vector2 Velocity => _velocityBuffer;
 
-        public Vector2 Velocity => _velocity;
+        private void Awake()
+        {
+            _rigidbody = GetComponent<Rigidbody2D>();
+        }
 
         private void Start()
         {
@@ -53,11 +62,11 @@ namespace Player.Ability
         {
             IsGrounded = false;
 
-            int count = Core.Rigidbody.Cast(-Core.Transform.up, _contactFilter, _hitBuffer, _minGroundNormalY);
-            IsGrounded = count > 0 && Mathf.Abs(Core.Rigidbody.velocity.y) <= _minMoveDistance;
+            int count = _rigidbody.Cast(-transform.up, _contactFilter, _hitBuffer, _minGroundNormalY);
+            IsGrounded = count > 0 && Mathf.Abs(_rigidbody.velocity.y) <= _minMoveDistance;
 
             if (Mathf.Abs(_velocityBuffer.x) > _minMoveDistance)
-                Core.Transform.Translate(_velocityBuffer * Vector2.right * Time.deltaTime);
+                transform.Translate(_velocityBuffer * Vector2.right * Time.deltaTime);
 
         }
 
@@ -67,7 +76,7 @@ namespace Player.Ability
             _velocity = Vector2.zero;
 
             if (IsGrounded && Mathf.Abs(_velocityBuffer.y) > _minMoveDistance)
-                Core.Rigidbody.AddForce(_velocityBuffer * Vector2.up);
+                _rigidbody.AddForce(_velocityBuffer * Vector2.up);
         }
     }
 }

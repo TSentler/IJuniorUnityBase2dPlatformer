@@ -8,7 +8,8 @@ using UnityEngine.Events;
 
 public interface IAlarmZone
 {
-    event UnityAction<bool> Alarmed;
+    event UnityAction Alarmed;
+    event UnityAction Calmed;
 }
 
 public class HouseAlarm : SerializedMonoBehaviour, IActivatable
@@ -36,7 +37,8 @@ public class HouseAlarm : SerializedMonoBehaviour, IActivatable
     {
         foreach (var zone in _alarmZones)
         {
-            zone.Alarmed += Alarmed;
+            zone.Alarmed += Activate;
+            zone.Calmed += Deactivate;
         }
     }
 
@@ -44,19 +46,8 @@ public class HouseAlarm : SerializedMonoBehaviour, IActivatable
     {
         foreach (var zone in _alarmZones)
         {
-            zone.Alarmed -= Alarmed;
-        }
-    }
-
-    private void Alarmed(bool isAlarm)
-    {
-        if (isAlarm)
-        {
-            Activate();
-        }
-        else
-        {
-            Deactivate();
+            zone.Alarmed -= Activate;
+            zone.Calmed -= Deactivate;
         }
     }
 

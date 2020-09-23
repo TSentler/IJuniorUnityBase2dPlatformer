@@ -2,41 +2,46 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Tools;
+using Control;
 
 namespace Player.Ability
 {
-    [RequireComponent(typeof(IPhysicsMovement), typeof(IGroundable))]
-    public class Jump : Ability
+    [RequireComponent(typeof(IPlayerInput))]
+    [RequireComponent(typeof(IMovement))]
+    [RequireComponent(typeof(IGroundable))]
+    [RequireComponent(typeof(Animator))]
+    public class Jump : MonoBehaviour
     {
         [SerializeField] private float _power = 10f;
-        [SerializeField] private IGroundable _ground;
-        [SerializeField] private IPhysicsMovement _physicsMovement;
 
+        private IPlayerInput _playerInput;
+        private IGroundable _ground;
+        private IMovement _movement;
+        private Animator _animator;
         private bool _lastAirState;
 
-        private void OnValidate()
+        private void Awake()
         {
-            _ground.VerifyNotNull<IGroundable>(nameof(_ground));
-            _physicsMovement.VerifyNotNull<IPhysicsMovement>(nameof(_physicsMovement));
+            _playerInput = GetComponent<IPlayerInput>();
+            _ground = GetComponent<IGroundable>();
+            _movement = GetComponent<IMovement>();
+            _animator = GetComponent<Animator>();
         }
 
         private void OnEnable()
         {
-            if (Core.InputHandler != null)
-                Core.InputHandler.JumpStarted += JumpStarted;
+            _playerInput.JumpStarted += JumpStarted;
         }
 
         private void OnDisable()
         {
-            if (Core.InputHandler != null)
-                Core.InputHandler.JumpStarted -= JumpStarted;
+            _playerInput.JumpStarted -= JumpStarted;
         }
 
         private void JumpStarted()
         {
             if (_ground.IsGrounded)
-                _physicsMovement.SetVerticalVelocity(_power);
+                _movement.SetVerticalVelocity(_power);
         }
 
         private void Update()
@@ -48,11 +53,10 @@ namespace Player.Ability
         {
             if (_lastAirState != inAir)
             {
-                Core.Animator.SetBool(AnimatorKeys.InAir, inAir);
-                Core.Animator.SetTrigger(AnimatorKeys.Jumped);
+                _animator.SetBool(AnimatorKeys.InAir, inAir);
+                _animator.SetTrigger(AnimatorKeys.Jumped);
                 _lastAirState = inAir;
             }
         }
-
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Pool
 {
-    public class PoolLazyItems : IPool, IDisposable
+    public class PoolLazyItems : IDisposable
     {
         private readonly IPoolable[] _created;
 
@@ -25,8 +25,6 @@ namespace Pool
         }
 
         public bool IsFull => _createdCount == _poolStack.Capacity;
-        public int Capacity => _created.Length;
-        public bool IsEmpty => _createdCount == 0;
 
         #region Dispose
         public void Dispose()
@@ -100,7 +98,7 @@ namespace Pool
             _poolStack.TryPush(poolItem);
         }
 
-        public void Remove(IPoolable poolItem)
+        private void Remove(IPoolable poolItem)
         {
             var i = Array.IndexOf(_created, poolItem);
             if (i == -1)
@@ -116,7 +114,7 @@ namespace Pool
             _created[_createdCount] = null;
         }
 
-        public void Clear()
+        private void Clear()
         {
             for (int i = 0; i < _createdCount; i++)
             {

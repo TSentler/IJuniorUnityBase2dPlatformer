@@ -1,35 +1,39 @@
-﻿using System;
+﻿using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Tools;
+using Control;
 
 namespace Player.Ability
 {
-    [RequireComponent(typeof(IPhysicsMovement))]
-    public class Movement : Ability
+    [RequireComponent(typeof(IMovement))]
+    [RequireComponent(typeof(IPlayerInput))]
+    [RequireComponent(typeof(Animator))]
+    public class HorizontalMovement : MonoBehaviour
     {
         [SerializeField] private float _speed = 10f;
-        [SerializeField] private IPhysicsMovement _physicsMovement;
 
+        private IPlayerInput _playerInput;
+        private IMovement _movement;
         private int _lastSignHorizontalMovement;
+        private Animator _animator;
 
-        private bool IsMove => Mathf.Approximately(Core.InputHandler.MovementDirection.x, 0f) == false;
+        private bool IsMove => 
+            Mathf.Approximately(_movement.Velocity.x, 0f) == false;
 
-        private void OnValidate()
+        private void Awake()
         {
-            _physicsMovement.VerifyNotNull<IPhysicsMovement>(nameof(_physicsMovement));
-        }
-
-        protected override void Awake()
-        {
-            base.Awake();   
             _lastSignHorizontalMovement = (int)Mathf.Sign(transform.localScale.x);
+            _playerInput = GetComponent<IPlayerInput>();
+            _movement = GetComponent<IMovement>();
+            _animator = GetComponent<Animator>();
         }
 
         private void Update()
         {
-            float horizontalInput = Core.InputHandler.MovementDirection.x;
+            float horizontalInput = _playerInput.MovementDirection.x;
             Move(horizontalInput);
             SetSpriteHorizontalDirection((int)Mathf.Sign(horizontalInput));
             SetMoveAnimationActive(IsMove);
@@ -38,7 +42,7 @@ namespace Player.Ability
         private void Move(float horizontalInput)
         {
             var horizontalStep = horizontalInput * _speed;
-            _physicsMovement.SetHorizontalVelocity(horizontalStep);
+            _movement.SetHorizontalVelocity(horizontalStep);
         }
 
         private void SetSpriteHorizontalDirection(int signHorizontalMovement)
@@ -56,7 +60,7 @@ namespace Player.Ability
 
         private void SetMoveAnimationActive(bool isRun)
         {
-            Core.Animator.SetBool(AnimatorKeys.IsRun, isRun);
+            _animator.SetBool(AnimatorKeys.IsRun, isRun);
         }
     }
 }

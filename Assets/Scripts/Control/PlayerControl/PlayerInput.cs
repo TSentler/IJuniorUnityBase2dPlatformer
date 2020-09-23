@@ -8,7 +8,7 @@ using static PlayerControls;
 
 namespace Control
 {
-    public class PlayerInputHandler : MonoBehaviour, IInputHandler, IPlayerActions
+    public class PlayerInput : MonoBehaviour, IPlayerInput, IPlayerActions
     {
         private PlayerControls _input;
 

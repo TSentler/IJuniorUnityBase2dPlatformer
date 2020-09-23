@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3623917627371950115}
   - component: {fileID: 3623917627371950113}
   - component: {fileID: 3623917627371950126}
-  - component: {fileID: 3623917627371950114}
+  - component: {fileID: 7375810955804474387}
   - component: {fileID: 3623917627371950121}
   - component: {fileID: 3623917627371950125}
   - component: {fileID: 3623917627371950120}
@@ -33,7 +33,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3623917627371950119}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 22.97, y: -1.1, z: 9.787445}
+  m_LocalPosition: {x: -6.35, y: 0.33, z: 9.787445}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -156,7 +156,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.2187722, y: 1.53125}
   m_EdgeRadius: 0
---- !u!114 &3623917627371950114
+--- !u!114 &7375810955804474387
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -165,18 +165,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3623917627371950119}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 373ae598c776c83418fbc76ce65e447b, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b22b8ccc62c0a74395275cfbf5d671e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
 --- !u!114 &3623917627371950121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,19 +207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 756548a21aafe7645bf9257862542c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 3623917627371950121}
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: _physicsMovement
-      Entry: 10
-      Data: 0
   _speed: 7
 --- !u!114 &3623917627371950120
 MonoBehaviour:
@@ -242,22 +220,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7af977adb0287f4ea2999a100c02793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 3623917627371950121}
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: _ground
-      Entry: 10
-      Data: 0
-    - Name: _physicsMovement
-      Entry: 10
-      Data: 0
   _power: 400
 --- !u!114 &3623917627371950122
 MonoBehaviour:

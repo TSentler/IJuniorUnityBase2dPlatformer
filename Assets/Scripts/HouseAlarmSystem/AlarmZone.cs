@@ -6,21 +6,22 @@ using UnityEngine.Events;
 
 public class AlarmZone : MonoBehaviour, IAlarmZone
 {
-    public event UnityAction<bool> Alarmed;
+    public event UnityAction Alarmed;
+    public event UnityAction Calmed;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out IPlayerCore playerCore))
+        if (collision.TryGetComponent(out IMovement player))
         {
-            Alarmed?.Invoke(true);
+            Alarmed?.Invoke();
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out IPlayerCore playerCore))
+        if (collision.TryGetComponent(out IMovement player))
         {
-            Alarmed?.Invoke(false);
+            Calmed?.Invoke();
         }
     }
 }
